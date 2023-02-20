@@ -1,23 +1,6 @@
 <template>
-  <v-card
-    flat
-    tile
+  <v-card flat tile
   >
-    <v-toolbar
-      color="cyan"
-      dark
-    >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Application</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-    </v-toolbar>
-
     <v-container
       v-for="type in types"
       :key="type"

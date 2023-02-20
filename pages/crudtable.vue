@@ -1,10 +1,10 @@
-<template>
+<template><div>
     <v-data-table 
 
       :headers="headers"
-      :items="desserts"
-      sort-by="calories"
-      class="elevation-24   blue-grey lighten-4"
+      :items="inputs"
+      sort-by="code"
+      class="elevation-2   blue-grey lighten-4"
       
     >
       <template v-slot:top>
@@ -12,7 +12,7 @@
         class="blue lighten-2"
           flat
         >
-          <v-toolbar-title>My CRUD</v-toolbar-title>
+          <v-toolbar-title>Section</v-toolbar-title>
           <v-divider
             class="mx-4"
             dark
@@ -21,17 +21,18 @@
           <v-spacer></v-spacer>
           <v-dialog
             v-model="dialog"
-            max-width="500px"
+            max-width="500px" 
+          
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 color="primary"
                 dark
-                class="mb-2"
+                class="mb-5"
                 v-bind="attrs"
                 v-on="on"
               >
-                New Item
+                Add
               </v-btn>
             </template>
             <v-card>
@@ -43,62 +44,65 @@
                 <v-container>
                   <v-row>
                     <v-col
+                   
                       cols="12"
                       sm="6"
-                      md="4"
+                     
                     >
                       <v-text-field
-                        v-model="editedItem.name"
-                        label="Dessert name"
+                        v-model="editedItem.fname"
+                        label="firstname"
+                        outlined
+                        dense
                       ></v-text-field>
                     </v-col>
                     <v-col
+                   
                       cols="12"
                       sm="6"
-                      md="4"
+                     
                     >
                       <v-text-field
-                        v-model="editedItem.calories"
-                        label="Calories"
+                        v-model="editedItem.lname"
+                        label="lastname"
+                        outlined
+                        dense
                       ></v-text-field>
                     </v-col>
                     <v-col
+                   
                       cols="12"
                       sm="6"
-                      md="4"
+                     
                     >
                       <v-text-field
-                        v-model="editedItem.fat"
-                        label="Fat (g)"
+                        v-model="editedItem.ecode"
+                        label="employee code"
+                        outlined
+                        dense
                       ></v-text-field>
                     </v-col>
+
                     <v-col
                       cols="12"
                       sm="6"
-                      md="4"
+                     
                     >
-                      <v-text-field
-                        v-model="editedItem.carbs"
-                        label="Carbs (g)"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="editedItem.protein"
-                        label="Protein (g)"
+                     <v-text-field
+                        v-model="editedItem.place"
+                        label="Place"
+                        outlined
+                         dense
                       ></v-text-field>
                     </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
   
-              <v-card-actions>
+              <v-card-actions >
                 <v-spacer></v-spacer>
-                <v-btn
+                <v-btn 
+                class="pa-2"
                   color="blue darken-1"
                   text
                   @click="close"
@@ -113,11 +117,11 @@
                   Save
                 </v-btn>
               </v-card-actions>
-            </v-card>
+             </v-card>
           </v-dialog>
-          <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-dialog v-model="dialogDelete" max-width="600px">
             <v-card>
-              <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+              <v-card-title class="text-h5">Are you sure you want to delete this details?</v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
@@ -152,6 +156,8 @@
         </v-btn>
       </template>
     </v-data-table>
+    {{ output }}
+  </div>
   </template>
 
 <script>
@@ -160,34 +166,34 @@ export default {
     dialog: false,
     dialogDelete: false,
     headers: [
-      { text: 'Desserts Item', align: 'start',sortable: false,  value: 'name',},
-      { text: 'Calories', value: 'calories' },
-      { text: 'Fat (g)', value: 'fat' },
-      { text: 'Carbs (g)', value: 'carbs' },
-      { text: 'Protein (g)', value: 'protein' },
-      { text: 'Actions', value: 'actions', sortable: false },
+      { text: ' firstname', align: 'start', sortable: false,  value: 'fname',},
+      { text: 'lastname', align: 'start',sortable: false, value: 'lname', },
+      { text: 'employee code', align: 'start', sortable: false,  value: 'ecode',},
+      { text: 'place', align: 'start',sortable: false, value: 'place', },
+      { text: 'Actions', sortable: false, value: 'actions', }
     ],
-    desserts: [],
+    inputs: [],
     editedIndex: -1,
     editedItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
+        fname: '',
+        lname: '',
+        ecode: '',
+        place: '',
+        
     },
     defaultItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
+        
+        fname: '',
+        lname: '',
+        ecode: '',
+        place: '',
     },
+     output:''
   }),
 
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+      return this.editedIndex === -1 ? 'Add text' : 'Edit text'
     },
   },
 
@@ -201,86 +207,60 @@ export default {
   },
 
   created () {
-    this.initialize()
+    // this.getAllUsers()
+    this.inputs= [{
+        
+        fname: 'Abhishek',
+        lname: 'Nair',
+        ecode: 'EMP001',
+        place: 'Hubli',
+    },{
+        
+        fname: 'Arun',
+        lname: 'K',
+        ecode: 'EMP002',
+        place: "Mandya",
+    }
+  ]
   },
 
   methods: {
-    initialize () {
-      this.desserts = [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-        },
-       
-      ]
+   async getAllUsers () {
+    try {
+           
+        let response = await this.$axios.$get(
+            `/getdata`
+          )
+          if(response)
+          this.inputs = response
+         } catch (error) {
+            console.log('Catch error', error)
+         }
     },
 
     editItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.inputs.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
     deleteItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.inputs.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
-    deleteItemConfirm () {
-      this.desserts.splice(this.editedIndex, 1)
+   async deleteItemConfirm () {
+      try {
+           
+           let response = await this.$axios.$delete(
+               `/deletedata/${this.editedItem?._id}`
+             )
+            
+             this.getAllUsers()
+            } catch (error) {
+               console.log('Catch error', error)
+            }
       this.closeDelete()
     },
 
@@ -300,11 +280,38 @@ export default {
       })
     },
 
-    save () {
+   async save () {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        
+         try {
+            let payload= {...this.editedItem}
+        let response = await this.$axios.$put(
+            `/updatedata/${payload._id}`,
+            payload
+          )
+          if(response){
+            console.log("Updated successfully")
+            this.getAllUsers()
+          }
+         } catch (error) {
+            console.log('Catch error', error)
+         }
       } else {
-        this.desserts.push(this.editedItem)
+         
+         try {
+            let payload= {...this.editedItem}
+        let response = await this.$axios.$post(
+            `/add`,
+            payload
+          )
+          if(response){
+            console.log("added successfully")
+            this.getAllUsers()
+          }
+         } catch (error) {
+            console.log('Catch error', error)
+         }
+       
       }
       this.close()
     },
